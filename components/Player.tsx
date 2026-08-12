@@ -29,59 +29,99 @@ export default function Player({
       tag.src = "https://www.youtube.com/iframe_api";
       document.body.appendChild(tag);
     }
+
     window.onYouTubeIframeAPIReady = () => setReady(true);
-    if (window.YT) setReady(true);
+
+    if (window.YT) {
+      setReady(true);
+    }
   }, []);
 
   useEffect(() => {
     if (!ready || !song) return;
-    playerRef.current?.destroy?.();
+
+    playerRef.current?.destroy();
+
     playerRef.current = new window.YT.Player("yt-player", {
       videoId: song.youtube_id,
-      playerVars: { autoplay: 0, controls: 0, rel: 0, modestbranding: 1, playsinline: 1 },
+
+      playerVars: {
+        autoplay: 0,
+        controls: 0,
+        rel: 0,
+        modestbranding: 1,
+        playsinline: 1,
+      },
+
       events: {
-       onReady: () => {
-  setPlaying(false);
-  onPlayingChange?.(false);
-},
-onStateChange: (e: any) => {
-  if (e.data === 0) {
-    setPlaying(false);
-    onPlayingChange?.(false);
-    onEnded();
-  }
+        onReady: () => {
+          setPlaying(false);
+          onPlayingChange?.(false);
+        },
 
-  if (e.data === 1) {
-    setPlaying(true);
-    onPlayingChange?.(true);
-  }
+        onStateChange: (event: any) => {
+          if (event.data === 0) {
+            setPlaying(false);
+            onPlayingChange?.(false);
+            onEnded();
+          }
 
-  if (e.data === 2) {
-    setPlaying(false);
-    onPlayingChange?.(false);
-  }
-}
-        }
-      }
+          if (event.data === 1) {
+            setPlaying(true);
+            onPlayingChange?.(true);
+          }
+
+          if (event.data === 2) {
+            setPlaying(false);
+            onPlayingChange?.(false);
+          }
+        },
+      },
     });
-    return () => playerRef.current?.destroy?.();
+
+    return () => {
+      playerRef.current?.destroy();
+    };
   }, [ready, song?.youtube_id]);
 
   const toggle = () => {
     if (!playerRef.current) return;
-    playing ? playerRef.current.pauseVideo() : playerRef.current.playVideo();
+
+    if (playing) {
+      playerRef.current.pauseVideo();
+    } else {
+      playerRef.current.playVideo();
+    }
   };
 
   return (
     <>
       <div id="yt-player" className="yt-hidden" />
-      <div className="timeLine"><span>LIVE</span><div className="line"><i /></div><span>RADIO</span></div>
+
+      <div className="timeline">
+        <span>LIVE</span>
+        <div className="line">
+          <i />
+        </div>
+        <span>RADIO</span>
+      </div>
+
       <div className="controls">
-        <button aria-label="Shuffle">⤨</button>
+        <button aria-label="Shuffle">↻</button>
+
         <button aria-label="Previous">|◀</button>
-        <button className="play" onClick={toggle} aria-label={playing ? "Pause" : "Play"}>{playing ? "Ⅱ" : "▶"}</button>
-        <button aria-label="Next" onClick={onEnded}>▶|</button>
-        <button aria-label="Repeat">↻</button>
+
+        <button
+          className="play"
+          onClick={toggle}
+          aria-label={playing ? "Pause" : "Play"}
+        >
+          {playing ? "Ⅱ" : "▶"}
+        </button>
+
+        <button aria-label="Next" onClick={onEnded}>
+          ▶|
+        </button>
       </div>
     </>
   );
