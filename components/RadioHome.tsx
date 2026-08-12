@@ -5,8 +5,7 @@ import { demoPlaylists, demoSongs, Playlist, Song } from "@/lib/demo";
 import Player from "./Player";
 import { getSupabaseBrowser } from "@/lib/supabase";
 
-const hero = "/hero-drive.png";
-
+const hero = "/slay-house-bg.png";
 function indiaMinutes() {
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone: "Asia/Kolkata",
