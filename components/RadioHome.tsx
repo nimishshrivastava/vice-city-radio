@@ -35,7 +35,8 @@ export default function RadioHome() {
   const [songs, setSongs] = useState<Song[]>(demoSongs);
   const [playlist, setPlaylist] = useState<Playlist>(demoPlaylists[0]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [menu, setMenu] = useState(false);
+const [menu, setMenu] = useState(false);
+const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     const supabase = getSupabaseBrowser();
@@ -108,8 +109,20 @@ export default function RadioHome() {
                 <p>{current?.album ?? "A nostalgic radio for timeless souls."}</p>
               </div>
             </div>
-            <div className="wave"><span />{Array.from({ length: 54 }).map((_, i) => <i key={i} style={{ height: `${8 + ((i * 17) % 28)}px` }} />)}<span /></div>
-            <Player song={current} onEnded={goNext} />
+            <div className={`wave ${isPlaying ? "wavePlaying" : ""}`}>
+  <span />
+  {Array.from({ length: 54 }).map((_, i) => (
+    <i
+      key={i}
+      style={{
+        "--bar": `${8 + ((i * 17) % 28)}px`,
+        "--delay": `${(i % 12) * 0.055}s`,
+      } as React.CSSProperties}
+    />
+  ))}
+  <span />
+</div>
+<Player song={current} onEnded={goNext} onPlayingChange={setIsPlaying} />
           </section>
 
           <section className="vibe glass">
