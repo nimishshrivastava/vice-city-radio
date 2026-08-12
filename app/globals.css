@@ -40,10 +40,10 @@
   animation-delay:var(--delay);
 }
 
-@keyframes radioWave{
-  0%{transform:scaleY(.22)}
-  25%{transform:scaleY(.65)}
-  50%{transform:scaleY(1)}
-  75%{transform:scaleY(.48)}
-  100%{transform:scaleY(.82)}
+.radio {
+  background-image: url("/slay-house-bg.png") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
 }
