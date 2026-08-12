@@ -72,8 +72,16 @@ const [isPlaying, setIsPlaying] = useState(false);
   const selectSong = (index: number) => setCurrentIndex(index);
 
   return (
-    <main className="radio" style={{ backgroundImage: `linear-gradient(90deg, rgba(7,4,12,.82), rgba(7,4,12,.18) 48%, rgba(7,4,12,.70)), url(${hero})` }}>
-      <header className="nav">
+   <main
+  className="radio"
+  style={{
+    backgroundImage: 'url("/slay-house-bg.png")',
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    minHeight: "100vh",
+  }}
+>
         <a className="brand" href="#">
          <span>SLAY HOUSE</span>
           <b>RADIO</b>
@@ -103,9 +111,9 @@ const [isPlaying, setIsPlaying] = useState(false);
                 }
               </div>
               <div>
-                <h1>{current?.title ?? "Vice City Radio"}</h1>
-                <h3>{current?.artist ?? "Live Radio"}</h3>
-                <p>{current?.album ?? "A nostalgic radio for timeless souls."}</p>
+               <h1>SLAY HOUSE</h1>
+               <h3>BY SANGEETA</h3>
+               <p>Beauty • Style • Music • Vibes</p>
               </div>
             </div>
             <div className={`wave ${isPlaying ? "wavePlaying" : ""}`}>
