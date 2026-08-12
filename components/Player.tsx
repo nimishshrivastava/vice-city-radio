@@ -10,7 +10,15 @@ declare global {
   }
 }
 
-export default function Player({ song, onEnded }: { song?: Song; onEnded: () => void }) {
+export default function Player({
+  song,
+  onEnded,
+  onPlayingChange,
+}: {
+  song?: Song;
+  onEnded: () => void;
+  onPlayingChange?: (playing: boolean) => void;
+}) {
   const playerRef = useRef<any>(null);
   const [ready, setReady] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -32,11 +40,27 @@ export default function Player({ song, onEnded }: { song?: Song; onEnded: () => 
       videoId: song.youtube_id,
       playerVars: { autoplay: 0, controls: 0, rel: 0, modestbranding: 1, playsinline: 1 },
       events: {
-        onReady: () => setPlaying(false),
-        onStateChange: (e: any) => {
-          if (e.data === 0) { setPlaying(false); onEnded(); }
-          if (e.data === 1) setPlaying(true);
-          if (e.data === 2) setPlaying(false);
+       onReady: () => {
+  setPlaying(false);
+  onPlayingChange?.(false);
+},
+onStateChange: (e: any) => {
+  if (e.data === 0) {
+    setPlaying(false);
+    onPlayingChange?.(false);
+    onEnded();
+  }
+
+  if (e.data === 1) {
+    setPlaying(true);
+    onPlayingChange?.(true);
+  }
+
+  if (e.data === 2) {
+    setPlaying(false);
+    onPlayingChange?.(false);
+  }
+}
         }
       }
     });
