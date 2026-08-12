@@ -75,7 +75,7 @@ const [isPlaying, setIsPlaying] = useState(false);
     <main className="radio" style={{ backgroundImage: `linear-gradient(90deg, rgba(7,4,12,.82), rgba(7,4,12,.18) 48%, rgba(7,4,12,.70)), url(${hero})` }}>
       <header className="nav">
         <a className="brand" href="#">
-          <span>Vice City</span>
+         <span>SLAY HOUSE</span>
           <b>RADIO</b>
         </a>
         <nav className={menu ? "navlinks open" : "navlinks"}>
